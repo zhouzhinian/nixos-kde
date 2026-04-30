@@ -14,6 +14,7 @@
    satty
    zed-editor
    github-desktop
+   ghostty
   ];
 
 }

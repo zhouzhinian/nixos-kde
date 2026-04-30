@@ -17,12 +17,10 @@
 
   # Configure network connections interactively with nmcli or nmtui.
   networking.networkmanager.enable = true;
+ 
+  console.keyMap = "us";
 
-  console = {
-    font = "terminus";
-    keyMap = "us";
-    useXkbConfig = true;
-  };
+  services.xserver.xkb.layout = "cn";
 
   services.desktopManager.plasma6.enable = true;
   services.displayManager.plasma-login-manager.enable = true;
@@ -59,11 +57,11 @@
     extraGroups = [ "networkmanager" "wheel" "libvirtd" "qemu" "kvm" "docker" "incus-admin"]; 
   };
 
-   programs.firefox.enable = true;
+   # programs.firefox.enable = true;
 
    environment.systemPackages = with pkgs; [
     git wget ripgrep jq yq-go eza fzf which file gnused zstd gnupg aria2 
-    tree zip xz unzip p7zip helix 
+    tree zip xz unzip p7zip helix fastfetch yazi
    ];
 
    programs.mtr.enable = true;
@@ -94,6 +92,8 @@
   # 将默认编辑器设置为 helix
   environment.variables.EDITOR = "helix";
  
+  services.flatpak.enable = true;
+   
   programs.clash-verge.enable = true;
 
       # 开启图形加速支持 
