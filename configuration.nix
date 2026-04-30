@@ -18,6 +18,14 @@
   # Configure network connections interactively with nmcli or nmtui.
   networking.networkmanager.enable = true;
 
+  console = {
+    font = "terminus";
+    keyMap = "us";
+    useXkbConfig = true;
+  };
+
+  services.desktopManager.plasma6.enable = true;
+  services.displayManager.plasma-login-manager.enable = true;
   # Set your time zone.
   time.timeZone = "Asia/Shanghai";
   # Select internationalisation properties.
@@ -44,16 +52,18 @@
      pulse.enable = true;
    };
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-   users.users.zhinian = {
-     isNormalUser = true;
-     extraGroups = [ "wheel" "networkmanager" ]; # Enable ‘sudo’ for the user.
-   };
+  # --- 6. 用户与安全 ---
+  users.users.zhinian = {
+    isNormalUser = true;
+    description = "周治年";
+    extraGroups = [ "networkmanager" "wheel" "libvirtd" "qemu" "kvm" "docker" "incus-admin"]; 
+  };
 
    programs.firefox.enable = true;
 
    environment.systemPackages = with pkgs; [
-     wget helix git 
+    git wget ripgrep jq yq-go eza fzf which file gnused zstd gnupg aria2 
+    tree zip xz unzip p7zip helix 
    ];
 
    programs.mtr.enable = true;
@@ -78,12 +88,23 @@
   trusted-public-keys = [
     "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
   ];
- experimental-features = [ "nix-command" "flakes" ];
+  experimental-features = [ "nix-command" "flakes" ];
  };
+  nixpkgs.config.allowUnfree = true;
   # 将默认编辑器设置为 helix
   environment.variables.EDITOR = "helix";
  
   programs.clash-verge.enable = true;
+
+      # 开启图形加速支持 
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+    extraPackages = with pkgs; [
+      nvidia-vaapi-driver
+    ];
+  };
+
 }
 
 
